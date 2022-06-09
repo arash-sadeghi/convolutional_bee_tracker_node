@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<launch>
+  
+  <arg name="hive"  default="hive_0"  doc="hive number"/>
+  <arg name="comb"  default="comb_0"  doc="comb number"/>
+
+  <arg name="cropped_image"  default="cropped_image/compressed"  doc="expected cropped image input"/>
+  <arg name="dependent_file_path"  default="$(find convolutional_bee_tracker)/data/essentials"  doc="path to pre-given kernels and masks"/>
+
+
+  <arg name="rotation"  default="rot_track"  doc="rotation of queen"/>
+  <arg name="cropped_queen"  default="cropped_queen"  doc="croped part of image where queen is expected to be there"/>
+
+  <!-- <group ns="/$(arg hive)/$(arg comb)/"> -->
+  <group ns="/$(arg hive)/">
+
+  <node pkg="convolutional_bee_tracker" type="ConAndRep_fused.py" name="ConAndRep_fused" output="screen" launch-prefix="" args="$(arg cropped_image) $(arg dependent_file_path) $(arg rotation) $(arg cropped_queen)">
+  
+    <remap from="cropped_image"   to="$(arg cropped_image)"/>
+    <remap from="dependent_file_path"   to="$(arg dependent_file_path)"/>
+
+    <remap from="rotation"   to="$(arg rotation)"/>
+    <remap from="cropped_queen"   to="$(arg cropped_queen)"/>
+
+
+  </node>
+</group>
+</launch>
+
